@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-size: cover;
+            animation: fadeInBackground 1s ease-in-out;
+        }
+
+        @keyframes fadeInBackground {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            animation: slideInUp 1s ease-in-out;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: slideInDown 1s ease-in-out;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+        h2{
+            color: aliceblue;
+        }
+
+        .section label {
+            display: block;
+            margin-bottom: 5px;
+            color: #faf8f8f0;
+        }
+
+        .section input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .section input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .balance {
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        #expenses-list {
+            margin-top: 20px;
+            color: #555;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #expenses-list h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        #expenses-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #expenses-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ccc;
+            color: #555;
+        }
+    </style>
+</head>
+<body style="background-image: url(https://www.bing.com/th/id/OGC.ab1a717cce0120485d94c8ef2406f7f5?pid=1.7&rurl=https%3a%2f%2f66.media.tumblr.com%2fb9ef578acf140f4c4703357d79c9e8c5%2ftumblr_inline_o81zmiLfQW1ro20i7_500.gif&ehk=dSpfGzJ%2fbVYDSGrFwe9at%2fqF7uBRb%2b6bV%2bK9bu6%2b%2bi0%3d);">
+    <a href="index.html">
+        <img src="https://static.vecteezy.com/system/resources/previews/000/567/900/original/vector-real-estate-house-icon.jpg" style="height: 50px;width: 50px;">
+      </a>
+      <br>
+    <b style="color: white;">
+    HOME
+    </b>     
+    <h1>Budget Tracker</h1>
+    <div class="container">
+        <div class="section">
+            <h2>Add Income</h2>
+            <label for="income-description">Description:</label>
+            <input type="text" id="income-description">
+            <label for="income-amount">Amount:</label>
+            <input type="number" id="income-amount">
+            <button onclick="addIncome()">Add Income</button>
+        </div>
+
+        <div class="section">
+            <h2>Add Expense</h2>
+            <label for="expense-description">Description:</label>
+            <input type="text" id="expense-description">
+            <label for="expense-amount">Amount:</label>
+            <input type="number" id="expense-amount">
+            <button onclick="addExpense()">Add Expense</button>
+        </div>
+
+        <button onclick="showExpenses()">Show Expenses</button>
+
+        <div class="balance" id="balance">Balance: $0</div>
+        <div id="expenses-list"></div>
+    </div>
+
+    <script>
+        let balance = 0;
+        let expenses = [];
+
+        function addIncome() {
+            const amount = parseFloat(document.getElementById('income-amount').value);
+
+            if (!isNaN(amount)) {
+                balance += amount;
+                updateBalance();
+            }
+
+            document.getElementById('income-description').value = '';
+            document.getElementById('income-amount').value = '';
+        }
+
+        function addExpense() {
+            const description = document.getElementById('expense-description').value;
+            const amount = parseFloat(document.getElementById('expense-amount').value);
+
+            if (!isNaN(amount)) {
+                balance -= amount;
+                expenses.push({ description, amount });
+                updateBalance();
+            }
+
+            document.getElementById('expense-description').value = '';
+            document.getElementById('expense-amount').value = '';
+        }
+
+        function updateBalance() {
+            document.getElementById('balance').textContent = 'Balance: $' + balance.toFixed(2);
+        }
+
+        function showExpenses() {
+            const expensesList = document.getElementById('expenses-list');
+            expensesList.innerHTML = '<h2>Expenses</h2>';
+            if (expenses.length === 0) {
+                expensesList.innerHTML += '<p>No expenses added yet.</p>';
+            } else {
+                expensesList.innerHTML += '<ul>';
+                expenses.forEach(expense => {
+                    expensesList.innerHTML += `<li>${expense.description}: $${expense.amount.toFixed(2)}</li>`;
+                });
+                expensesList.innerHTML += '</ul>';
+            }
+        }
+    </script>
+</body>
+</html>

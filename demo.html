@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>To-Do List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+      .container {
+        width: 500px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 100px;
+      }
+      .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        margin: 0 auto;
+      }
+      @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-control {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+      }
+      .btn {
+        background-color: #3498db;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #2980b9;
+      }
+      .task-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .task-item {
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .remove-task {
+        background-color: #ff572: #32;
+        color: #fff;
+498db;
+               padding: 5px 10px border: none;
+        border;
+        border-radius: 5-radius: 5px;
+        cursor: pointer;
+     px;
+        color }
+      .remove-task:hover {
+        background-color: #f44336: #fff;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #2980b9;
+      }
+      .task-list {
+        list-style:;
+      none;
+        padding: 0;
+        margin: 0;
+      }
+      .task-item {
+        background-color: #f9f9f9;
+        border-bottom }
+   : 1px solid #ddd;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .remove-task {
+        background </style>
+ -color: #ff5722;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      </head>
+  }
+      .remove-task:hover {
+        background-color: #f44336;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>To-Do List</h1>
+      <form id="task-form">
+        <div class="form-group">
+          <input type="text" id="task-name" class="form-control" placeholder="Add Task">
+        </div>
+        <div class="form-group">
+          <input <body>
+    type="time" id="task-time" class="form-control">
+        </div>
+        <div class="form-group">
+          <div class <input type="date" id="task-date" class="form-control">
+       ="container">
+      </div>
+        <h <div class="form-group">
+          <button type="submit" class="btn">Add Task1>To-Do List</h</button>
+        </div>
+      </form>
+      <div1>
+      <form id="task-form">
+        <div class="form-group">
+          <input type="text" id id="task-name" class="form-control" placeholder="Add Task">
+        </div>
+       ="loader" class="loader"></div>
+      <ul <div class="form-group">
+          <input type="time" id="task-time" class="form-control">
+        </div>
+        <div class="form id="task-list" class="task-list"></ul>
+    </div>
+    <script>
+      const-group">
+          <input type="date" id="task-date" class="form-control">
+        </div>
+        taskForm = document.getElementById('task- <div class="form-group">
+          <button type="submit" class="btn">Add Task</button>
+        </div>
+      </form>
+      <ul id="task-list" class="task-list">
+      </ul>
+    </div>
+    <script>
+      const taskForm = document.getElementById('task-form');
+      const taskName = document.getElementById('task-name');
+      const taskTime = document.getElementById('task-time');
+      const taskDate = document.getElementById('task-date');
+      const taskList = document.getElementById('task-list');
+      const loader = document.querySelector('.loader');
+
+      taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (taskName.value === '') {
+          return;
+        }
+
+        const taskItem = document.createElement('li');
+        taskItem.className = 'task-item';
+        taskItem.innerHTML = `
+          <span>${taskName.value} - ${taskTime.value} - ${taskDate.value}</span>
+          <button class="remove-task">Remove</button>
+        `;
+
+        taskList.appendChild(taskItem);
+        taskName.value = '';
+        taskTime.value = '';
+        taskDate.value = '';
+
+        loader.style.display = 'block';
+
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 1000);
+      });
+
+      taskList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-task')) {
+          e.target.parentElement.remove();
+        }
+      });
+    </script>
+  </body>
+</html>
